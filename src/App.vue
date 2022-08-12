@@ -1,5 +1,4 @@
 <template>
-  <header>Supachok Jrirarojkul</header>
   <div id="flashMessage" v-if="GStore.flashMessage">
     {{ GStore.flashMessage }}
   </div>
@@ -13,7 +12,10 @@
 </template>
 <script>
 export default {
-  inject: ['GStore'] // <----
+  inject: ['GStore'], // <----
+  mounted() {
+    document.title = 'Supachok Jrirarojkul'
+  }
 }
 </script>
 <style>
