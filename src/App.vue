@@ -1,4 +1,5 @@
 <template>
+  <header>Supachok Jrirarojkul</header>
   <div id="flashMessage" v-if="GStore.flashMessage">
     {{ GStore.flashMessage }}
   </div>
