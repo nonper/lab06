@@ -1,6 +1,6 @@
 version: "3.9"
 services:
   web:
-  image: "biggib01/lab06:latest"
+  image: "biggib01/se311-lab06:latest"
   ports:
     - 8001:80
