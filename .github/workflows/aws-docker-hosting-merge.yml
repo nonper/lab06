@@ -30,11 +30,10 @@ jobs:
           push: true
           tags: biggib01/se331-lab06:latest
       -
-        name: docker compose
-        uses: alex-ac/github-action-ssh-docker-compose@master
-        with:
-          ssh_host: ${{ secrets.HOST_SERVER }}
-          ssh_private_key: ${{ secrets.HOST_SSH_PRIVATE_KEY }}
-          ssh_user: ${{ secrets.HOST_USER_NAME }}
-          docker_compose_prefix: vue-331
-          docker_compose_filename: "./docker-compose.yml"
+        name: docker-compose run
+        run: |
+              mkdir vue-331
+              cp docker-compose.yml vue-331/docker-compose.yml
+              cd vue-331
+              docker-compose -H ${{ secrets.HOST_SERVER }} pull
+              docker-compose -H ${{ secrets.HOST_SERVER }} up -d
