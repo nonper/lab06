@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  web:
+  image: "biggib01/biggib01/lab06:lastest"
+  ports:
+    - 8001:80
