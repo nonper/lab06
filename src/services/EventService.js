@@ -16,5 +16,11 @@ export default {
   //Added new call
   getEvent(id) {
     return apiClient.get('/event/' + id)
+  },
+  getOrganizers(perPage, page) {
+    return apiClient.get('/organizer?_limit=' + perPage + '&_page=' + page)
+  },
+  getOrganizer(id) {
+    return apiClient.get('/organizer/' + id)
   }
 }

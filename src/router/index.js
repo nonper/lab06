@@ -1,10 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import EventList from '../views/EventList.vue'
-import About from '../views/About.vue'
+import Organizer from '../views/OrganizerList.vue'
+import OrganizerDetail from '@/views/organizerEvent/Details.vue'
+import OrganizerRegister from '@/views/organizerEvent/Register.vue'
+import OrganizerEdit from '@/views/organizerEvent/Edit.vue'
 import EventDetails from '@/views/event/Details.vue'
 import EventRegister from '@/views/event/Register.vue'
 import EventEdit from '@/views/event/Edit.vue'
 import EventLayout from '@/views/event/Layout.vue'
+import OrganizerLayout from '@/views/organizerEvent/Layout.vue'
 import NotFound from '@/views/NotFound.vue'
 import NetWorkError from '@/views/NetworkError.vue'
 import NProgress from 'nprogress'
@@ -18,9 +22,53 @@ const routes = [
     props: (route) => ({ page: parseInt(route.query.page) || 1 })
   },
   {
-    path: '/about',
-    name: 'About',
-    component: About
+    path: '/organizer',
+    name: 'Organizer',
+    component: Organizer,
+    props: (route) => ({ page: parseInt(route.query.page) || 1 })
+  },
+  {
+    path: '/organizer/:id',
+    name: 'OrganizerLayout',
+    props: true,
+    component: OrganizerLayout,
+    beforeEnter: (to) => {
+      return EventService.getOrganizer(to.params.id) // Return and params.id
+        .then((response) => {
+          // Still need to set the data here
+          GStore.event = response.data // <--- Store the event
+        })
+        .catch((error) => {
+          if (error.response && error.response.status == 404) {
+            return {
+              // <--- Return
+              name: '404Resource',
+              params: { resource: 'event' }
+            }
+          } else {
+            return { name: 'NetworkError' } // <--- Return
+          }
+        })
+    },
+    children: [
+      {
+        path: '',
+        name: 'OrganizerDetail',
+        component: OrganizerDetail
+      },
+      {
+        path: 'register',
+        name: 'OrganizerRegister',
+        props: true,
+        component: OrganizerRegister
+      },
+      {
+        path: 'edit',
+        name: 'OrganizerEdit',
+        props: true,
+        component: OrganizerEdit
+      }
+    ]
   },
   {
     path: '/event/:id',
